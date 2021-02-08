@@ -1,0 +1,25 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+        - id: GYM-SERVICE
+          uri: lb://GYM-SERVICE
+          predicates:
+            - Path=/api/v1beta/gym**
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    server-url:
+      defaultZone: http://localhost:8761/eureka/
+  instances:
+    hostname: localhost
